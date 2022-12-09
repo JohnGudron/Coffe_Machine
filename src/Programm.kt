@@ -1,4 +1,4 @@
-data class Resources(
+data class Resources( // store amount of resources
     var water: Int = 400,
     var milk: Int = 540,
     var beans: Int = 120,
@@ -8,10 +8,10 @@ data class Resources(
 
 fun main() {
     val state = Resources()
-    val costs = arrayListOf(
-        intArrayOf(250, 0, 16, 1),  // espresso
-        intArrayOf(350, 75, 20, 1), // latte
-        intArrayOf(200, 100, 12, 1) // cappuccino
+    val costs = arrayListOf(        // resources required for different coffee types
+        intArrayOf(250, 0, 16, 1),  // for espresso
+        intArrayOf(350, 75, 20, 1), // for latte
+        intArrayOf(200, 100, 12, 1) // for cappuccino
     )
     val text = { _water: Int, _milk: Int, _beans: Int, _cups: Int, _money: Int ->
         println(
@@ -24,7 +24,7 @@ $$_money of money"""
         )
     }
 
-    fun check(cost: IntArray): Pair<Boolean, String> {
+    fun check(cost: IntArray): Pair<Boolean, String> { // checking  lack of particular resource
         return when {
             state.water - cost[0] < 0 -> Pair(false, "water")
             state.milk - cost[1] < 0 -> Pair(false, "milk")
@@ -34,7 +34,7 @@ $$_money of money"""
         }
     }
 
-    fun buy() {
+    fun buy() { // Make particular calculations according to chosen type
         println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:")
         when (readln()) {
             "1" -> {
@@ -83,7 +83,7 @@ $$_money of money"""
         }
     }
 
-    fun fill() {
+    fun fill() { // append input amount of resources to state
         println("Write how many ml of water you want to add:")
         state.water += readln().toInt()
         println("Write how many ml of milk you want to add:")
@@ -94,12 +94,12 @@ $$_money of money"""
         state.cups += readln().toInt()
     }
 
-    fun take() {
+    fun take() { // subtract all money from state
         println("I gave you $${state.money}")
         state.money -= state.money
     }
 
-    fun remain() {
+    fun remain() { // display current amount of resources
         text(state.water, state.milk, state.beans, state.cups, state.money)
     }
 
@@ -107,7 +107,7 @@ $$_money of money"""
         // just empty function for now
     }
 
-    fun menu() {
+    fun menu() { // base function that invokes particular function according to user's choose
         println("Write action (buy, fill, take, remaining, exit):")
         val action = readln()
         when (action) {
